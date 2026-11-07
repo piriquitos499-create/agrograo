@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agro Grão Direto | Logística Inteligente</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .step-content { display: none; }
+        .step-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .qr-sim {
+            background-image: radial-gradient(#000 20%, transparent 20%), radial-gradient(#000 20%, transparent 20%);
+            background-position: 0 0, 10px 10px;
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-[#FBFBFA] text-stone-900 min-h-screen selection:bg-emerald-200">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('landing')">
+            <div class="w-8 h-8 bg-emerald-700 rounded-lg flex items-center justify-center text-white">
+                <i data-lucide="wheat" size="18"></i>
+            </div>
+            <span class="font-black text-stone-900 tracking-tight hidden sm:block">AGRO GRÃO DIRETO</span>
+        </div>
+        <div id="session-badge" class="hidden px-3 py-1 bg-white/80 backdrop-blur-md border border-stone-200 rounded-full text-[10px] font-bold text-stone-500 uppercase tracking-widest">
+            Sessão Ativa
+        </div>
+    </header>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="fixed inset-0 z-[60] bg-white/60 backdrop-blur-sm hidden flex items-center justify-center transition-all">
+        <div class="w-12 h-12 border-4 border-emerald-200 border-t-emerald-700 rounded-full animate-spin"></div>
+    </div>
+
+    <main class="pt-24 pb-12 px-4">
+        
+        <!-- Landing Page -->
+        <section id="landing" class="step-content active flex flex-col items-center justify-center min-h-[80vh] text-center px-6">
+            <div class="mb-8 p-4 bg-emerald-100 rounded-full text-emerald-700">
+                <i data-lucide="wheat" size="48" stroke-width="2.5"></i>
+            </div>
+            <h1 class="text-5xl font-black text-stone-900 mb-4 tracking-tight">
+                Agro <span class="text-emerald-700">Grão Direto</span>
+            </h1>
+            <p class="text-stone-600 text-lg max-w-md mb-12 leading-relaxed">
+                A ponte tecnológica entre a colheita e a sua entrega. Simplicidade, precisão e agilidade no campo.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-sm">
+                <button onclick="navigateTo('login')" class="flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-bold bg-emerald-700 text-white hover:bg-emerald-800 shadow-lg shadow-emerald-900/20 transition-all active:scale-95 w-full">
+                    Entrar <i data-lucide="log-in" size="20"></i>
+                </button>
+                <button onclick="navigateTo('register')" class="flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-bold bg-stone-100 text-stone-700 hover:bg-stone-200 transition-all active:scale-95 w-full">
+                    Cadastro <i data-lucide="user-plus" size="20"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Register Page -->
+        <section id="register" class="step-content max-w-md mx-auto w-full px-6 py-12">
+            <button onclick="navigateTo('landing')" class="flex items-center gap-2 text-stone-500 hover:text-emerald-700 transition-colors mb-8 group">
+                <i data-lucide="chevron-left" size="20" class="group-hover:-translate-x-1 transition-transform"></i> Voltar
+            </button>
+            <div class="bg-white p-8 rounded-3xl shadow-xl shadow-stone-200 border border-stone-100">
+                <h2 class="text-3xl font-bold text-stone-900 mb-2">Crie sua conta</h2>
+                <p class="text-stone-500 mb-8">Preencha os dados para começar a operar.</p>
+                <div class="space-y-5">
+                    <div class="flex flex-col gap-1.5 w-full">
+                        <label class="text-xs font-semibold text-stone-500 uppercase tracking-wider">Nome Completo</label>
+                        <input type="text" id="reg-name" placeholder="Ex: João da Silva" class="px-4 py-3 rounded-xl border border-stone-200 bg-stone-50 focus:ring-2 focus:ring-emerald-600 outline-none transition-all text-stone-800">
+                    </div>
+                    <div class="flex flex-col gap-1.5 w-full">
+                        <label class="text-xs font-semibold text-stone-500 uppercase tracking-wider">E-mail</label>
+                        <input type="email" id="reg-email" placeholder="joao@fazenda.com" class="px-4 py-3 rounded-xl border border-stone-200 bg-stone-50 focus:ring-2 focus:ring-emerald-600 outline-none transition-all text-stone-800">
+                    </div>
+                    <div class="flex flex-col gap-1.5 w-full">
+                        <label class="text-xs font-semibold text-stone-500 uppercase tracking-wider">Senha</label>
+                        <input type="password" id="reg-pass" placeholder="••••••••" class="px-4 py-3 rounded-xl border border-stone-200 bg-stone-50 focus:ring-2 focus:ring-emerald-600 outline-none transition-all text-stone-800">
+                    </div>
+                    <button onclick="navigateTo('login')" class="flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-bold bg-emerald-700 text-white hover:bg-emerald-800 shadow-lg shadow-emerald-900/20 transition-all active:scale-95 w-full">
+                        Finalizar Cadastro <i data-lucide="arrow-right" size="20"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Page -->
+        <section id="login" class="step-content max-w-md mx-auto w-full px-6 py-12">
+            <button onclick="navigateTo('landing')" class="flex items-center gap-2 text-stone-500 hover:text-emerald-700 transition-colors mb-8 group">
+                <i data-lucide="chevron-left" size="20" class="group-hover:-translate-x-1 transition-transform"></i> Voltar
+            </button>
+            <div class="bg-white p-8 rounded-3xl shadow-xl shadow-stone-200 border border-stone-100">
+                <h2 class="text-3xl font-bold text-stone-900 mb-2">Bem-vindo</h2>
+                <p class="text-stone-500 mb-8">Acesse seu painel de pedidos.</p>
+                <div class="space-y-5">
+                    <div class="flex flex-col gap-1.5 w-full">
+                        <label class="text-xs font-semibold text-stone-500 uppercase tracking-wider">E-mail</label>
+                        <input type="email" placeholder="joao@fazenda.com" class="px-4 py-3 rounded-xl border border-stone-200 bg-stone-50 focus:ring-2 focus:ring-emerald-600 outline-none transition-all text-stone-800">
+                    </div>
+                    <div class="flex flex-col gap-1.5 w-full">
+                        <label class="text-xs font-semibold text-stone-500 uppercase tracking-wider">Senha</label>
+                        <input type="password" placeholder="••••••••" class="px-4 py-3 rounded-xl border border-stone-200 bg-stone-50 focus:ring-2 focus:ring-emerald-600 outline-none transition-all text-stone-800">
+                    </div>
+                    <button onclick="navigateTo('selection')" class="flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-bold bg-emerald-700 text-white hover:bg-emerald-800 shadow-lg shadow-emerald-900/20 transition-all active:scale-95 w-full">
+                        Entrar no Sistema <i data-lucide="arrow-right" size="20"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Selection Page -->
+        <section id="selection" class="step-content max-w-2xl mx-auto w-full px-6 py-12">
+            <div class="flex items-center justify-between mb-10">
+                <div>
+                    <h2 class="text-3xl font-bold text-stone-900">Seu Pedido</h2>
+                    <p class="text-stone-500">Selecione a quantidade de grãos desejada.</p>
+                </div>
+                <div class="p-3 bg-emerald-100 text-emerald-700 rounded-2xl">
+                    <i data-lucide="shopping-bag" size="28"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                <!-- Card Milho -->
+                <div id="card-corn" class="p-6 rounded-3xl border-2 border-stone-100 bg-white transition-all">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="p-3 bg-yellow-100 text-yellow-700 rounded-2xl">
+                            <i data-lucide="wheat" size="24"></i>
+                        </div>
+                        <span class="text-xl font-bold text-stone-800">Milho</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <input type="number" id="input-corn" placeholder="0" oninput="updateCardStyle('corn')" class="w-full px-4 py-3 rounded-xl border border-stone-200 outline-none focus:ring-2 focus:ring-emerald-600">
+                        <span class="font-semibold text-stone-500">kg</span>
+                    </div>
+                </div>
+
+                <!-- Card Soja -->
+                <div id="card-soy" class="p-6 rounded-3xl border-2 border-stone-100 bg-white transition-all">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="p-3 bg-green-100 text-green-700 rounded-2xl">
+                            <i data-lucide="leaf" size="24"></i>
+                        </div>
+                        <span class="text-xl font-bold text-stone-800">Soja</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <input type="number" id="input-soy" placeholder="0" oninput="updateCardStyle('soy')" class="w-full px-4 py-3 rounded-xl border border-stone-200 outline-none focus:ring-2 focus:ring-emerald-600">
+                        <span class="font-semibold text-stone-500">kg</span>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="navigateTo('address')" class="flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-bold bg-emerald-700 text-white hover:bg-emerald-800 shadow-lg shadow-emerald-900/20 transition-all active:scale-95 w-full">
+                Continuar para Entrega <i data-lucide="arrow-right" size="20"></i>
+            </button>
+        </section>
+
+        <!-- Address Page -->
+        <section id="address" class="step-content max-w-md mx-auto w-full px-6 py-12">
+            <button onclick="navigateTo('selection')" class="flex items-center gap-2 text-stone-500 hover:text-emerald-700 transition-colors mb-8 group">
+                <i data-lucide="chevron-left" size="20" class="group-hover:-translate-x-1 transition-transform"></i> Voltar
+            </button>
+            <div class="bg-white p-8 rounded-3xl shadow-xl shadow-stone-200 border border-stone-100">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="p-2 bg-stone-100 text-stone-600 rounded-lg">
+                        <i data-lucide="map-pin" size="20"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-stone-900">Endereço de Entrega</h2>
+                </div>
+                <div class="space-y-5">
+                    <div class="flex flex-col gap-1.5 w-full">
+                        <label class="text-xs font-semibold text-stone-500 uppercase tracking-wider">Rua/Logradouro</label>
+                        <input type="text" id="addr-street" placeholder="Av. Principal" class="px-4 py-3 rounded-xl border border-stone-200 bg-stone-50 focus:ring-2 focus:ring-emerald-600 outline-none transition-all text-stone-800">
+                    </div>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="col-span-1 flex flex-col gap-1.5 w-full">
+                            <label class="text-xs font-semibold text-stone-500 uppercase tracking-wider">Nº</label>
+                            <input type="text" id="addr-num" placeholder="123" class="px-4 py-3 rounded-xl border border-stone-200 bg-stone-50 focus:ring-2 focus:ring-emerald-600 outline-none transition-all text-stone-800">
+                        </div>
+                        <div class="col-span-2 flex flex-col gap-1.5 w-full">
+                            <label class="text-xs font-semibold text-stone-500 uppercase tracking-wider">CEP</label>
+                            <input type="text" id="addr-zip" placeholder="00000-000" class="px-4 py-3 rounded-xl border border-stone-200 bg-stone-50 focus:ring-2 focus:ring-emerald-600 outline-none transition-all text-stone-800">
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-1.5 w-full">
+                        <label class="text-xs font-semibold text-stone-500 uppercase tracking-wider">Cidade</label>
+                        <input type="text" id="addr-city" placeholder="Paragominas - PA" class="px-4 py-3 rounded-xl border border-stone-200 bg-stone-50 focus:ring-2 focus:ring-emerald-600 outline-none transition-all text-stone-800">
+                    </div>
+                    <button onclick="generateOrder()" class="flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-bold bg-emerald-700 text-white hover:bg-emerald-800 shadow-lg shadow-emerald-900/20 transition-all active:scale-95 w-full">
+                        Confirmar e Gerar QR Code <i data-lucide="check-circle-2" size="20"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Page -->
+        <section id="success" class="step-content max-w-md mx-auto w-full px-6 py-12 text-center">
+            <div class="mb-8 flex justify-center">
+                <div class="p-4 bg-emerald-100 text-emerald-700 rounded-full animate-bounce">
+                    <i data-lucide="check-circle-2" size="48"></i>
+                </div>
+            </div>
+            <h2 class="text-3xl font-bold text-stone-900 mb-2">Pedido Confirmado!</h2>
+            <p class="text-stone-500 mb-10">Apresente o código abaixo ao motorista no momento da entrega.</p>
+            
+            <div class="bg-white p-10 rounded-[40px] shadow-2xl shadow-emerald-900/10 border border-stone-100 flex flex-col items-center gap-8 mb-12">
+                <div class="p-6 bg-stone-50 rounded-3xl border-4 border-dashed border-stone-200">
+                    <div class="w-48 h-48 bg-stone-900 rounded-xl p-2 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 opacity-20 qr-sim"></div>
+                        <i data-lucide="qr-code" size="120" class="text-white z-10"></i>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <span class="text-xs font-bold text-stone-400 uppercase tracking-widest block mb-1">Código do Pedido</span>
+                    <span id="display-order-id" class="text-2xl font-mono font-black text-stone-800">AGRO-XXXXX</span>
+                </div>
+            </div>
+
+            <div class="bg-stone-50 p-6 rounded-2xl border border-stone-200 text-left mb-8">
+                <div class="flex items-center gap-2 text-stone-800 font-bold mb-3">
+                    <i data-lucide="truck" size="18"></i> Resumo da Carga
+                </div>
+                <div class="flex justify-between text-sm text-stone-600 mb-1">
+                    <span>Milho:</span>
+                    <span id="resumo-corn" class="font-semibold">0 kg</span>
+                </div>
+                <div class="flex justify-between text-sm text-stone-600">
+                    <span>Soja:</span>
+                    <span id="resumo-soy" class="font-semibold">0 kg</span>
+                </div>
+            </div>
+
+            <button onclick="resetApp()" class="flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-bold bg-stone-100 text-stone-700 hover:bg-stone-200 transition-all active:scale-95 w-full">
+                Novo Pedido
+            </button>
+        </section>
+
+    </main>
+
+    <footer class="fixed bottom-6 left-0 right-0 text-center pointer-events-none">
+        <p class="text-[10px] font-medium text-stone-400 uppercase tracking-widest opacity-50">
+            © 2026 Agro Grão Direto • Logística Inteligente
+        </p>
+    </footer>
+
+    <script>
+        // Inicializa ícones do Lucide
+        lucide.createIcons();
+
+        function navigateTo(stepId) {
+            const overlay = document.getElementById('loading-overlay');
+            const badge = document.getElementById('session-badge');
+            
+            overlay.classList.remove('hidden');
+            
+            setTimeout(() => {
+                // Remove active de todas as telas
+                document.querySelectorAll('.step-content').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Ativa a tela selecionada
+                document.getElementById(stepId).classList.add('active');
+                
+                // Mostra badge de sessão se não for landing
+                if (stepId !== 'landing') {
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
+                
+                overlay.classList.add('hidden');
+                window.scrollTo(0, 0);
+            }, 600);
+        }
+
+        function updateCardStyle(type) {
+            const input = document.getElementById(`input-${type}`);
+            const card = document.getElementById(`card-${type}`);
+            
+            if (input.value > 0) {
+                card.classList.add('border-emerald-600', 'bg-emerald-50/50');
+                card.classList.remove('border-stone-100', 'bg-white');
+            } else {
+                card.classList.remove('border-emerald-600', 'bg-emerald-50/50');
+                card.classList.add('border-stone-100', 'bg-white');
+            }
+        }
+
+        function generateOrder() {
+            const corn = document.getElementById('input-corn').value || 0;
+            const soy = document.getElementById('input-soy').value || 0;
+            
+            if (corn == 0 && soy == 0) {
+                alert('Por favor, selecione ao menos um produto.');
+                return;
+            }
+
+            // Gera ID aleatório
+            const orderId = 'AGRO-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+            
+            // Preenche resumo
+            document.getElementById('display-order-id').innerText = orderId;
+            document.getElementById('resumo-corn').innerText = corn + ' kg';
+            document.getElementById('resumo-soy').innerText = soy + ' kg';
+            
+            navigateTo('success');
+        }
+
+        function resetApp() {
+            document.getElementById('input-corn').value = '';
+            document.getElementById('input-soy').value = '';
+            document.getElementById('addr-street').value = '';
+            document.getElementById('addr-num').value = '';
+            document.getElementById('addr-zip').value = '';
+            document.getElementById('addr-city').value = '';
+            updateCardStyle('corn');
+            updateCardStyle('soy');
+            navigateTo('landing');
+        }
+    </script>
+</body>
+</html>
